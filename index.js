@@ -1,9 +1,12 @@
+// netlify/functions/server.js
+
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path'); // Import the path package
 const Result = require('./models/results'); // Import your model
+const serverless = require('serverless-http');
 
 const app = express();
 const port = process.env.PORT || 4000; // Port for your server
@@ -19,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({ origin: 'https://ieltsidp.online/' })); // Enable CORS for your frontend
 
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'frontend/build')));
+app.use(express.static(path.join(__dirname, '../../frontend/build')));
 
 // API Routes
 app.post('/results', async (req, res) => {
@@ -51,9 +54,7 @@ app.get("/", async (req, res) => {
 
 // The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../../frontend/build', 'index.html'));
 });
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
+module.exports.handler = serverless(app);
