@@ -1,5 +1,3 @@
-// backend/index.js
-
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -18,10 +16,14 @@ mongoose.connect("mongodb+srv://result:result@cluster0.ajwm45j.mongodb.net/", { 
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({ origin: 'https://ieltsidp.online/' }));
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'frontend_build')));
+// CORS configuration
+app.use(cors({
+  origin: ['https://ieltsidp.online', 'http://localhost:3000'], // Replace with your frontend URLs
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+  credentials: true // Allow cookies to be sent cross-origin
+}));
 
 // API Routes
 app.post('/results', async (req, res) => {
@@ -48,14 +50,11 @@ app.get('/results/:passport', async (req, res) => {
 });
 
 app.get("/", async (req, res) => {
-  res.send("hello from backend");
+  res.send("Hello from backend ilets");
 });
 
-// The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend_build', 'index.html'));
+// Server start
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-app.listen(
-  process.env.PORT || 5000,
-  () => console.log(`Listening on port ${process.env.PORT || 5000}!`)
-)
