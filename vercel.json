@@ -1,1 +1,10 @@
-{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/backend" }] }
+//{ "version": 2, "rewrites": [{ "source": "/(.*)", "destination": "/backend" }] }
+{
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "outputDirectory": "public"
+}
