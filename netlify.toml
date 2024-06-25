@@ -1,8 +1,3 @@
 [build]
-  functions = "netlify/functions"
-  publish = "../frontend/results/build"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.js"
-  status = 200
+  functions = "backend"  # Directory where your backend code resides
+  command = "npm start"  # Command to start your server
