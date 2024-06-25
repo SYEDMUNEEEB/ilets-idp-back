@@ -1,8 +1,0 @@
-[build]
-  functions = "backend"  # Directory where your backend code resides
-  command = "npm start"  # Command to start your server (if needed)
-
-[[redirects]]
-  from = "/*"
-  to = "/index.js"  # Adjusted to point to your main backend file
-  status = 200

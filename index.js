@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
-const serverless = require('serverless-http');
+
 const Result = require('./models/results'); // Adjust the path to your model
 
 const app = express();
@@ -55,5 +55,7 @@ app.get("/", async (req, res) => {
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'frontend_build', 'index.html'));
 });
-
-module.exports.handler = serverless(app);
+app.listen(
+  process.env.PORT || 5000,
+  () => console.log(`Listening on port ${process.env.PORT || 5000}!`)
+)
